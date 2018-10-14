@@ -1,0 +1,4 @@
+---
+prefix: '~/sandbox'
+build_dir: '~/opt'
+zookeeper_version: 

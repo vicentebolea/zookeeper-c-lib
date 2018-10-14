@@ -1,0 +1,14 @@
+---
+- name: Download tar.gz 
+  get_url: 
+    url: http://downloads.sourceforge.net/project/boost/boost/{{ boost_version }}/{{ boost_tar_name  }}
+    dest: {{ boost_work_dir }}/{{ boost_tar_name }} 
+
+- name: Unpack tarball
+    command: /bin/tar jxfv {{ boost_work_dir }}/{{ boost_tar_name }} -C {{ boost_work_dir }}
+  
+- name: Configure zookeeper
+    command: chdir={{ boost_work_dir }}/{{ boost_build_dir }} ./configure --prefix {{ prefix }}
+
+- name: Make zookeeper
+    command: chdir={{ boost_work_dir }}/{{ boost_build_dir }} /usr/bin/make -j8 install
