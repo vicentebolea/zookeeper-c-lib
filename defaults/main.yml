@@ -1,4 +1,6 @@
 ---
 prefix: '~/sandbox'
 build_dir: '~/opt'
-zookeeper_version: 
+zookeeper_version: '3.4.13'
+zookeeper_archive: "zookeeper-{{ zookeeper_version }}.tar.gz"
+zookeeper_dir: "{{ build_dir }}/zookeeper-{{ zookeeper_version }}/src/c"

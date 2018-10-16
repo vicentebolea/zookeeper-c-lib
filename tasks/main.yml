@@ -1,14 +1,20 @@
 ---
+- name: Print variables
+  debug:
+    msg: "Installing {{ zookeeper_archive }} into {{ prefix }} using build dir {{ zookeeper_dir }}"
+
 - name: Download tar.gz 
   get_url: 
-    url: http://downloads.sourceforge.net/project/boost/boost/{{ boost_version }}/{{ boost_tar_name  }}
-    dest: {{ boost_work_dir }}/{{ boost_tar_name }} 
+    url: "http://apache.mirror.cdnetworks.com/zookeeper/zookeeper-{{ zookeeper_version }}/{{ zookeeper_archive }}"
+    dest: "{{ build_dir }}/{{ zookeeper_archive }}"
 
 - name: Unpack tarball
-    command: /bin/tar jxfv {{ boost_work_dir }}/{{ boost_tar_name }} -C {{ boost_work_dir }}
+  unarchive:
+    src: "{{ build_dir }}/{{ zookeeper_archive }}"
+    dest: "{{ build_dir }}"
   
 - name: Configure zookeeper
-    command: chdir={{ boost_work_dir }}/{{ boost_build_dir }} ./configure --prefix {{ prefix }}
+  command: chdir={{ zookeeper_dir }} ./configure --prefix {{ prefix }}
 
-- name: Make zookeeper
-    command: chdir={{ boost_work_dir }}/{{ boost_build_dir }} /usr/bin/make -j8 install
+- name: Make and install zookeeper globably
+  command: chdir={{ zookeeper_dir }} /usr/bin/make -j8 install
